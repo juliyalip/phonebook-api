@@ -4,7 +4,8 @@ import { HttpError } from "../helpers/HttpError.js";
 import { wrapperComponent } from "../helpers/cntrlWrapper.js";
 
 const getAllContacts = async (req, res) => {
-  const data = await Contact.find();
+  const data = await ContactSchema.find();
+
   res.json(data);
 };
 
