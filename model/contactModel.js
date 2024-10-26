@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 import Joi from "joi";
 
-export const validateContact = Joi.object({
+const add = Joi.object({
   name: Joi.string().min(2).required(),
   number: Joi.number().min(5).required(),
 });
@@ -25,4 +25,8 @@ contactSchema.post("save", (error, data, next) => {
   error.status = 400;
   next();
 });
-export const ContactSchema = model("contacts", contactSchema);
+
+export const Contact = model("contacts", contactSchema);
+export default {
+  add,
+};
