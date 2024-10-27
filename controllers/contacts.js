@@ -9,10 +9,8 @@ const getAllContacts = async (req, res) => {
 };
 
 const getContactByID = async (req, res, next) => {
-  const contacts = await Contact.find();
-  const contact = contacts.find(
-    (contact) => contact.id === req.params.contactId
-  );
+ const {contactId}= req.params;
+const contact = await Contact.findById(contactId)
   res.json(contact);
 };
 

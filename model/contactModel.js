@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
 import Joi from "joi";
+import { handleMongusError } from "../helpers/handleMonguseError.js";
 
 const add = Joi.object({
   name: Joi.string().min(2).required(),
@@ -21,10 +22,7 @@ const contactSchema = new Schema(
   { versionKey: false, timestamps: true }
 );
 
-contactSchema.post("save", (error, data, next) => {
-  error.status = 400;
-  next();
-});
+contactSchema.post("save", handleMongusError);
 
 export const Contact = model("contacts", contactSchema);
 export default {
