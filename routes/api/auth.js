@@ -1,5 +1,6 @@
 import express from 'express';
 import { validateBody } from '../../middelwares/validateBody.js';
+
 import schemas from '../../model/userModel.js';
 import cntrl from '../../controllers/user.js'
 
