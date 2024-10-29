@@ -4,7 +4,10 @@ import  { Contact} from "../model/contactModel.js";
 import { wrapperComponent } from "../helpers/cntrlWrapper.js";
 
 const getAllContacts = async (req, res) => {
-  const data = await Contact.find();
+  const {_id: owner}= req.user;
+  const {page= 1, limit =3} = req.query;
+  const skip = (page -1)* limit;
+  const data = await Contact.find({owner}, "--createdAp -updatedAt", {skip, limit}).populate("owner", "name email");
   res.json(data);
 };
 
@@ -14,8 +17,9 @@ const contact = await Contact.findById(contactId)
   res.json(contact);
 };
 
-const addNewContact = async (req, res, next) => {
-     const data = await Contact.create(req.body);
+const addNewContact = async (req, res) => {
+  const {_id: owner} = req.user
+     const data = await Contact.create({...req.body, owner});
     res.status(201).json(data);
 };
 

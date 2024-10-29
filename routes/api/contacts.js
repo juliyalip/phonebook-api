@@ -7,8 +7,8 @@ import schemas from "../../model/contactModel.js";
 const contactsRouter = express.Router();
 
 contactsRouter.get("/", authenticate,  controller.getAllContacts);
-contactsRouter.get("/:contactId", controller.getContactByID);
-contactsRouter.post("/", validateBody(schemas.add),  controller.addNewContact);
-contactsRouter.patch("/:contactId", async (req, res) => {});
+contactsRouter.get("/:contactId", authenticate,  controller.getContactByID);
+contactsRouter.post("/", authenticate, validateBody(schemas.add),  controller.addNewContact);
+contactsRouter.patch("/:contactId", authenticate,  async (req, res) => {});
 
 export default contactsRouter;

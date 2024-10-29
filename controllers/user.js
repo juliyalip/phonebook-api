@@ -32,11 +32,26 @@ const payload = {
     id: user._id
 }
 const token = jwt.sign(payload, SECRET, {expiresIn: "12h"})
+await User.findByIdAndUpdate(user._id, {token})
 res.json(token)
 }
 
+const getCurrentUser = async(req, res)=>{
+  const {name, email} = req.user;
+  res.json({name, email})
+}
+
+const logout = async(req, res)=>{
+const {_id} = req.user;
+await User.findByIdAndUpdate(_id, {token: ''})
+res.json({
+  message: "Logout succes"
+})
+}
 
 export default {
     registration: wrapperComponent(registration),
-    login: wrapperComponent(login)
+    login: wrapperComponent(login),
+    getCurrentUser: wrapperComponent(getCurrentUser),
+    logout: wrapperComponent(logout)
 };

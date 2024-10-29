@@ -1,13 +1,22 @@
-import express from 'express';
-import { validateBody } from '../../middelwares/validateBody.js';
+import express from "express";
+import { validateBody } from "../../middelwares/validateBody.js";
+import { authenticate } from "../../middelwares/authentificate.js";
+import schemas from "../../model/userModel.js";
+import cntrl from "../../controllers/user.js";
 
-import schemas from '../../model/userModel.js';
-import cntrl from '../../controllers/user.js'
+const authRouter = express.Router();
 
-const authRouter = express.Router()
+authRouter.post(
+  "/register",
+  validateBody(schemas.registerSchema),
+  cntrl.registration
+);
 
-authRouter.post("/register", validateBody(schemas.registerSchema), cntrl.registration)
+authRouter.post("/login", validateBody(schemas.loginSchema), cntrl.login);
 
-authRouter.post("/login", validateBody(schemas.loginSchema), cntrl.login)
+// is token valid
+authRouter.get('/current', authenticate, cntrl.getCurrentUser)
 
-export default authRouter
+authRouter.post("/logout", authenticate, cntrl.logout)
+
+export default authRouter;
