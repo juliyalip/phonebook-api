@@ -4,7 +4,7 @@ export const validateBody = (schema) => {
     const foo = function (req, res, next) {
         const { error } = schema.validate(req.body);
         if (error) {
-            next(HttpError(400, error.message = "The fields can't be empty"));
+            next(HttpError(400, error.message = "Fill out all fields"));
         }
         next();
     };

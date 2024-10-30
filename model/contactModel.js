@@ -4,7 +4,7 @@ import { handleMongusError } from "../helpers/handleMonguseError.js";
 
 const add = Joi.object({
   name: Joi.string().min(2).required(),
-  number: Joi.number().min(5).required(),
+  number: Joi.string().min(5).required(),
 });
 
 const contactSchema = new Schema(

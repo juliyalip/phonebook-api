@@ -7,14 +7,13 @@ import cntrl from "../../controllers/user.js";
 const authRouter = express.Router();
 
 authRouter.post(
-  "/register",
-  validateBody(schemas.registerSchema),
-  cntrl.registration
+    "/register",
+    validateBody(schemas.registerSchema),
+    cntrl.registration
 );
 
 authRouter.post("/login", validateBody(schemas.loginSchema), cntrl.login);
 
-// is token valid
 authRouter.get('/current', authenticate, cntrl.getCurrentUser)
 
 authRouter.post("/logout", authenticate, cntrl.logout)

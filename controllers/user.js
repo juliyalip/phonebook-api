@@ -4,7 +4,7 @@ import { User } from "../model/userModel.js";
 import { wrapperComponent } from "../helpers/cntrlWrapper.js";
 import { HttpError } from "../helpers/HttpError.js";
 
-const {SECRET} = process.env
+const { SECRET } = process.env
 
 const registration = async (req, res) => {
   const { email, password } = req.body;
@@ -17,41 +17,41 @@ const registration = async (req, res) => {
   res.status(201).json({ name: newUser.name, email: newUser.email });
 };
 
-const login = async (req, res)=>{
+const login = async (req, res) => {
 
-const {email, password} = await req.body;
-const user =await User.findOne({ email });
-if(!user){
+  const { email, password } = await req.body;
+  const user = await User.findOne({ email });
+  if (!user) {
     throw HttpError(401, "E-mail or password is invalide")
-}
-const passwordCompare = bcrypt.compare(password, user.password);
-if (!passwordCompare){
+  }
+  const passwordCompare = bcrypt.compare(password, user.password);
+  if (!passwordCompare) {
     throw HttpError(401, "E-mail or password is invalide")
-}
-const payload = {
+  }
+  const payload = {
     id: user._id
-}
-const token = jwt.sign(payload, SECRET, {expiresIn: "12h"})
-await User.findByIdAndUpdate(user._id, {token})
-res.json(token)
-}
-
-const getCurrentUser = async(req, res)=>{
-  const {name, email} = req.user;
-  res.json({name, email})
+  }
+  const token = jwt.sign(payload, SECRET, { expiresIn: "6h" })
+  await User.findByIdAndUpdate(user._id, { token })
+  res.json(token)
 }
 
-const logout = async(req, res)=>{
-const {_id} = req.user;
-await User.findByIdAndUpdate(_id, {token: ''})
-res.json({
-  message: "Logout succes"
-})
+const getCurrentUser = async (req, res) => {
+  const { name, email } = req.user;
+  res.json({ name, email })
+}
+
+const logout = async (req, res) => {
+  const { _id } = req.user;
+  await User.findByIdAndUpdate(_id, { token: '' })
+  res.json({
+    message: "Logout succes"
+  })
 }
 
 export default {
-    registration: wrapperComponent(registration),
-    login: wrapperComponent(login),
-    getCurrentUser: wrapperComponent(getCurrentUser),
-    logout: wrapperComponent(logout)
+  registration: wrapperComponent(registration),
+  login: wrapperComponent(login),
+  getCurrentUser: wrapperComponent(getCurrentUser),
+  logout: wrapperComponent(logout)
 };
