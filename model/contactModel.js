@@ -7,6 +7,10 @@ const add = Joi.object({
   number: Joi.string().min(5).required(),
 });
 
+const updateFavorite = Joi.object({
+  favorite: Joi.boolean().required(),
+});
+
 const contactSchema = new Schema(
   {
     name: { type: String, required: true },
@@ -18,11 +22,11 @@ const contactSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    owner:{
+    owner: {
       type: Schema.Types.ObjectId,
       ref: "users",
-      require: true
-    }
+      require: true,
+    },
   },
   { versionKey: false, timestamps: true }
 );
@@ -32,4 +36,5 @@ contactSchema.post("save", handleMongusError);
 export const Contact = model("contacts", contactSchema);
 export default {
   add,
+  updateFavorite,
 };

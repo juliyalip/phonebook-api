@@ -10,7 +10,7 @@ export const authenticate = async (req, res, next) => {
   if (bearer !== "Bearer") {
     next(HttpError(401));
   }
-  try {   // time of token
+  try {
     const { id } = jwt.verify(token, SECRET);
 
     const user = await User.findById(id);
@@ -24,4 +24,3 @@ export const authenticate = async (req, res, next) => {
     next(HttpError(401));
   }
 };
-// it cheks is token valid

@@ -13,9 +13,7 @@ authRouter.post(
 );
 
 authRouter.post("/login", validateBody(schemas.loginSchema), cntrl.login);
-
 authRouter.get('/current', authenticate, cntrl.getCurrentUser)
-
 authRouter.post("/logout", authenticate, cntrl.logout)
 
 export default authRouter;
