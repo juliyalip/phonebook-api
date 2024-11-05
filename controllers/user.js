@@ -33,7 +33,7 @@ const login = async (req, res) => {
   }
   const token = jwt.sign(payload, SECRET, { expiresIn: "6h" })
   await User.findByIdAndUpdate(user._id, { token })
-  res.json(token)
+  res.json({token: token})
 }
 
 const getCurrentUser = async (req, res) => {
