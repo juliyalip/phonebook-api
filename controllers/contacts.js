@@ -4,10 +4,7 @@ import { wrapperComponent } from "../helpers/cntrlWrapper.js";
 
 const getAllContacts = async (req, res) => {
   const { _id: owner } = req.user;
-  const data = await Contact.find({ owner }, "--createdAp -updatedAt", {
-    skip,
-    limit,
-  }).populate("owner", "name email");
+  const data = await Contact.find({ owner }, "--createdAp -updatedAt").populate("owner", "name email");
   res.json(data);
 };
 
