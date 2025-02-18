@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
 import Joi from "joi";
+import gravatar from 'gravatar'
 import { handleMongusError } from "../helpers/handleMonguseError.js";
 
 const emailRegexp =
@@ -25,6 +26,16 @@ const userSchema = new Schema(
       type: String,
       default: "",
     },
+    avatar: {
+      type: String,
+      default: function () {
+        return gravatar.url(this.email, { s: "150" }, true)
+      }
+    },
+    idCloudAvatar: {
+      type: String,
+      default: null
+    }
   },
   { versionKey: false, timestamps: true }
 );
