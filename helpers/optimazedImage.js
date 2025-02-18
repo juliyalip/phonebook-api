@@ -1,5 +1,6 @@
 import sharp from "sharp";
 import path from 'path'
+import fs from 'fs/promises'
 
 export const optimazedImage = async (tempPath) => {
     const optimazedPath = path.join(process.cwd(), "public", "avatars", `${Date.now()}.webp`);
