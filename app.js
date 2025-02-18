@@ -25,10 +25,10 @@ app.use((req, res) => {
 });
 
 app.use((error, req, res, next) => {
-  const { status =500, message = "Server error" } = error;
+  const { status =500} = error;
 
 res.status(status).json({
-    message,
+  error: error.message
   });
 });
 
