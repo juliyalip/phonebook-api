@@ -2,7 +2,8 @@ import sharp from "sharp";
 import path from 'path'
 
 export const optimazedImage = async (tempPath) => {
-    const optimazedPath = path.join(process.cwd(), "public", "avatars", `${Date.now()}.webp`); // Путь с уникальным именем
+    const optimazedPath = path.join(process.cwd(), "public", "avatars", `${Date.now()}.webp`);
+    await fs.mkdir(outputDir, { recursive: true });
    
     try {
       await sharp(tempPath)
